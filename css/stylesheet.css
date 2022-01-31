@@ -20,7 +20,8 @@ body,html{
 
 #outer-layer{
     width: 1100px;
-    height: 700px;
+    min-height: 700px;
+    min-width: 600px;
     position: absolute;
     left: 50%;
     top: 50%;
@@ -28,4 +29,43 @@ body,html{
     background: rgba(255,255,255, 0.3);   
     border-radius: 10px;
     display: flex;
+    flex-direction: column;
 }
+
+#title{
+    flex: 0 0 auto;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: white;   
+    text-shadow: 5px 5px 20px rgba(0,0,0,0.8);
+}
+
+#container{
+    flex: 1 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#buttons,#grid{
+    flex: 0 0 auto;
+    height: 500px;
+    background-color: white;
+    box-shadow: 0 0 20px 5px rgba(0,0,0,0.25);
+    border-style: solid;
+    border-width: 0.5px;
+}
+
+#buttons{
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+#grid{
+    width: 500px;
+}
+
