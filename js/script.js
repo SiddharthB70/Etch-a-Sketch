@@ -1,25 +1,26 @@
-let prevImage = null;
-let prevButton = null;
+let presentBackground = null;
+let prevMode = null, presentMode = null;
+
 function enterButtons(){
     const buttons = document.querySelectorAll(".button");
     buttons.forEach(function(button){
-        button.addEventListener("mouseenter",changeDesign);
+        button.addEventListener("mouseenter",hoverDesign);
         button.addEventListener("mouseleave",revertDesign);
-        button.addEventListener("click",pickGrid)
+        button.addEventListener("click",pickMode);
     })
 }
 
-function changeDesign(e){
-    changeBackground(e.target);
-    hoverButton(e.target);    
+function hoverDesign(e){
+    hoverBackground(e.target);
+    selectButton(e.target);    
 }
 
 function revertDesign(e){
     revertBackground();
-    hoverButton(e.target);
+    selectButton(e.target);
 }
 
-function changeBackground(button){
+function hoverBackground(button){
     let imgLink;
     switch(button.id){
         case "black":   imgLink = "../img/black.png";  
@@ -33,36 +34,61 @@ function changeBackground(button){
             
     }
     const backgroundImg = document.getElementById("background-image");
-    prevImage = backgroundImg.src;
     backgroundImg.src = imgLink;
-    // backgroundImg.classList.add("appear");
 }
 
 function revertBackground(){
     const backgroundImg = document.getElementById("background-image");
-    backgroundImg.src = prevImage;
-    // backgroundImg.classList.remove("appear");
-    // setTimeout(function(){
-    //     backgroundImg.src = prevImage;
-    //     backgroundImg.classList.add("appear");
-    // },1000)
+    backgroundImg.src = presentBackground;
 }
 
 
-function hoverButton(button){
+function selectButton(button){
     button.classList.toggle("hover");
 }
 
-function pickGrid(e){
-    buttonPicked(e.target);
+function pickMode(e){
+    presentMode = e.target.id;
+    if(prevMode == null)
+        prevMode = e.target.id;
+    else{
+        if(prevMode == presentMode)
+            presentMode = null;
+    }
+    pickBackground(e.target);
+    pickButton(e.target);
 }
 
-function buttonPicked(button){
-    if(prevButton!=null){
-        prevButton
+function pickBackground(button){
+    const backgroundImg = document.getElementById("background-image");
+    if(presentMode == null){
+        presentBackground = null;
+        revertBackground();
+    }
+    else{
+        presentBackground = backgroundImg.src
+        hoverBackground(button);
     }
 }
 
+function pickButton(presentButton){
+    if(presentMode == null){
+        presentButton.addEventListener("mouseenter",hoverDesign);
+        presentButton.addEventListener("mouseleave",revertDesign);
+        prevMode = null;
+    }
+    else{
+        const prevButton = document.getElementById(prevMode);
+        if(prevMode != presentMode){
+            prevButton.addEventListener("mouseenter",hoverDesign);
+            prevButton.addEventListener("mouseleave",revertDesign);
+            selectButton(prevButton);
+            prevMode = presentMode;
+        }
+        presentButton.removeEventListener("mouseenter",hoverDesign);
+        presentButton.removeEventListener("mouseleave",revertDesign);
+    }
+}
 
 enterButtons();
 
