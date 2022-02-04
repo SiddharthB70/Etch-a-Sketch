@@ -1,22 +1,28 @@
-let presentBackground = null;
+let presentBackground = "../img/clear.jpg";
 let prevMode = null, presentMode = null;
 
 function enterButtons(){
     const buttons = document.querySelectorAll(".button");
     buttons.forEach(function(button){
-        button.addEventListener("mouseenter",hoverDesign);
-        button.addEventListener("mouseleave",revertDesign);
-        button.addEventListener("click",pickMode);
+        if(button.id != "cells"){
+            button.addEventListener("mouseenter",hoverDesign);
+            button.addEventListener("mouseleave",revertDesign);
+            if(button.id != "clear")
+                button.addEventListener("click",pickMode);
+        }
+        
     })
 }
 
 function hoverDesign(e){
-    hoverBackground(e.target);
+    if(e.target.id != "clear")
+        hoverBackground(e.target);
     selectButton(e.target);    
 }
 
 function revertDesign(e){
-    revertBackground();
+    if(e.target.id != "clear")
+        revertBackground();
     selectButton(e.target);
 }
 
@@ -28,10 +34,7 @@ function hoverBackground(button){
         case "rgb": imgLink = "../img/rgb.jpg";
                     break;
         case "eraser":  imgLink = "../img/eraser.jpg";
-                        break;
-        case "clear":   imgLink = "../img/clear.jpg";
-                        break;
-            
+                        break;            
     }
     const backgroundImg = document.getElementById("background-image");
     backgroundImg.src = imgLink;
@@ -62,7 +65,7 @@ function pickMode(e){
 function pickBackground(button){
     const backgroundImg = document.getElementById("background-image");
     if(presentMode == null){
-        presentBackground = null;
+        presentBackground = "../img/clear.jpg";
         revertBackground();
     }
     else{
