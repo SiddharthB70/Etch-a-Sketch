@@ -3,6 +3,7 @@ let prevMode = null, presentMode = null;
 
 const backgroundImg = document.getElementById("background-image");
 const grid = document.getElementById("grid");
+const slider = document.getElementById("slider");
 
 let mouseDown = false;
 grid.addEventListener("mousedown",function(){mouseDown = true;},{capture:true});
@@ -101,11 +102,12 @@ function pickButton(presentButton){
 }
 
 function createGrid(){
-    let i,j;
-    for (i = 1; i <= 10; i++){
+    resetGrid();
+    let i,j, size = slider.value;
+    for (i = 1; i <= size; i++){
         const row = document.createElement("div");
         row.classList.add("grid-row");
-        for(j = 1; j <= 10; j++){
+        for(j = 1; j <= size; j++){
             const cell = document.createElement("div");
             cell.classList.add("row-cell");
             cell.setAttribute("data-colored","null");
@@ -114,6 +116,12 @@ function createGrid(){
             row.appendChild(cell);
         }
         grid.appendChild(row);
+    }
+}
+
+function resetGrid(){
+    while(grid.firstChild){
+        grid.removeChild(grid.firstChild);
     }
 }
 
@@ -193,5 +201,15 @@ function start(){
     enterButtons();
     createGrid();
 }
+
+window.onload = function(){
+    slider.value = "16";
+    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
+}
+
+slider.addEventListener("input",function(){
+    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
+    createGrid();
+})
 
 start();
