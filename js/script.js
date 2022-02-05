@@ -16,6 +16,8 @@ function enterButtons(){
             button.addEventListener("mouseleave",revertDesign);
             if(button.id != "clear")
                 button.addEventListener("click",pickMode);
+            else
+                button.addEventListener("click",clearGrid);
         }
         
     })
@@ -125,6 +127,8 @@ function gridMode(e){
                         break;
         case "rgb": gridRGB(cell,cellColored);
                     break;
+        case "eraser": eraser(cell);
+                        break;
     }
 
 }
@@ -141,6 +145,11 @@ function gridRGB(cell,cellColored){
        color = randomRGB();
        cell.style.setProperty("background-color",`rgb(${color[0]},${color[1]},${color[2]})`);// 0-R, 1-G, 2-B
        cell.setAttribute("data-colored","rgb");
+       cell.setAttribute("data-shade","10");
+       cell.setAttribute("data-originalcolor",`${[color[0],color[1],color[2]]}`); 
+   }
+   else if(cellColored === "rgb"){
+        shadeCell(cell);
    }
 }
 
@@ -151,6 +160,33 @@ function randomRGB(){
         color.push(value);
     }
     return color;
+}
+
+function shadeCell(cell){
+    let originalColor = cell.getAttribute("data-originalcolor").split(","), 
+        shade = cell.getAttribute("data-shade"),
+        newColor = [];
+    shade--;
+    if(shade<0)
+        return;
+    originalColor.forEach(function(color){
+        color = color * shade/10;
+        newColor.push(color);
+    })
+    cell.style.setProperty("background-color",`rgb(${newColor[0]},${newColor[1]},${newColor[2]})`);
+    cell.setAttribute("data-shade",`${shade}`);
+}
+
+function eraser(cell){
+    cell.style.removeProperty("background-color");
+    cell.setAttribute("data-colored","null");
+    cell.removeAttribute("data-shade");
+    cell.removeAttribute("data-originalcolor");
+}
+
+function clearGrid(){
+    const cells = document.querySelectorAll(".row-cell");
+    cells.forEach(function(cell){eraser(cell)});
 }
 
 function start(){
