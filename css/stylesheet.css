@@ -19,10 +19,6 @@ body,html{
     transition: opacity 1s;
 }
 
-#background-image.appear{
-    opacity: 80%;
-}
-
 #outer-layer{
     width: 1100px;
     height: 700px;
@@ -89,18 +85,17 @@ body,html{
 .hover {
     background-position: left bottom;
     color: white;
+    border-color: black;
   }
 
-  #cells.button{
+#cells.button{
       flex-direction: column;
       justify-content: center;
       align-items: start;
   }
 
-  .grid-row,.row-cell{
+.grid-row,.row-cell{
     display: flex;
-    border-style: solid;
-    border-width: 0.2px;
 }
 
 .grid-row,.row-cell{
@@ -108,7 +103,6 @@ body,html{
 }
 
 .row-cell{
-    display: block;
     background-color: white;
     transition: background-color 0.2s;
 }

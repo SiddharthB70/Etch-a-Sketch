@@ -110,4 +110,14 @@ function createGrid(){
     }
 }
 
+function gridMode(){
+    switch(presentMode){
+        case "black":   blackMode();
+                        break;
+    }
+}
+
+
+
+
 createGrid();
