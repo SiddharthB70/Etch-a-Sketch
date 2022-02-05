@@ -90,3 +90,9 @@ body,html{
     background-position: left bottom;
     color: white;
   }
+
+  #cells.button{
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+  }
