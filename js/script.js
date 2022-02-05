@@ -83,7 +83,7 @@ function pickMode(e){
 
 function pickBackground(button){
     if(presentMode == null){
-        presentBackground = "../img/clear.jpg";
+        presentBackground = "img/clear.jpg";
         revertBackground();
     }
     else{
