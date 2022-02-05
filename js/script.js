@@ -1,6 +1,13 @@
 let presentBackground = "../img/clear.jpg";
 let prevMode = null, presentMode = null;
 
+const backgroundImg = document.getElementById("background-image");
+const grid = document.getElementById("grid");
+
+let mouseDown = false;
+grid.addEventListener("mousedown",function(){mouseDown = true;},{capture:true});
+grid.addEventListener("mouseup",function(){mouseDown = false;},{capture:true});
+
 function enterButtons(){
     const buttons = document.querySelectorAll(".button");
     buttons.forEach(function(button){
@@ -36,12 +43,10 @@ function hoverBackground(button){
         case "eraser":  imgLink = "../img/eraser.jpg";
                         break;            
     }
-    const backgroundImg = document.getElementById("background-image");
     backgroundImg.src = imgLink;
 }
 
 function revertBackground(){
-    const backgroundImg = document.getElementById("background-image");
     backgroundImg.src = presentBackground;
 }
 
@@ -52,6 +57,7 @@ function selectButton(button){
 
 function pickMode(e){
     presentMode = e.target.id;
+    //prevMode is used to make sure that,while clicking buttons, the previous button is unchecked
     if(prevMode == null)
         prevMode = e.target.id;
     else{
@@ -63,7 +69,6 @@ function pickMode(e){
 }
 
 function pickBackground(button){
-    const backgroundImg = document.getElementById("background-image");
     if(presentMode == null){
         presentBackground = "../img/clear.jpg";
         revertBackground();
@@ -93,10 +98,7 @@ function pickButton(presentButton){
     }
 }
 
-enterButtons();
-
 function createGrid(){
-    const grid = document.getElementById("grid");
     let i,j;
     for (i = 1; i <= 10; i++){
         const row = document.createElement("div");
@@ -104,20 +106,56 @@ function createGrid(){
         for(j = 1; j <= 10; j++){
             const cell = document.createElement("div");
             cell.classList.add("row-cell");
+            cell.setAttribute("data-colored","null");
+            cell.addEventListener("mousedown",gridMode);
+            cell.addEventListener("mouseover",gridMode);
             row.appendChild(cell);
         }
         grid.appendChild(row);
     }
 }
 
-function gridMode(){
+function gridMode(e){
+    if(presentMode == null || !mouseDown)
+        return;
+    const cell = e.target;
+    let cellColored = cell.getAttribute("data-colored");
     switch(presentMode){
-        case "black":   blackMode();
+        case "black":   gridBlack(cell,cellColored);
                         break;
+        case "rgb": gridRGB(cell,cellColored);
+                    break;
+    }
+
+}
+
+function gridBlack(cell,cellColored){
+    if(cellColored === "null"){
+        cell.style.setProperty("background-color","black");
+        cell.setAttribute("data-colored","black");
     }
 }
 
+function gridRGB(cell,cellColored){
+   if(cellColored === "null"){
+       color = randomRGB();
+       cell.style.setProperty("background-color",`rgb(${color[0]},${color[1]},${color[2]})`);// 0-R, 1-G, 2-B
+       cell.setAttribute("data-colored","rgb");
+   }
+}
 
+function randomRGB(){
+    let i,color = [],value;
+    for(i=0;i<3;i++){
+        value = Math.floor(Math.random()*256);
+        color.push(value);
+    }
+    return color;
+}
 
+function start(){
+    enterButtons();
+    createGrid();
+}
 
-createGrid();
+start();
