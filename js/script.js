@@ -1,9 +1,19 @@
-let presentBackground = "../img/clear.jpg";
+let presentBackground = "img/clear.jpg";
 let prevMode = null, presentMode = null;
 
 const backgroundImg = document.getElementById("background-image");
 const grid = document.getElementById("grid");
 const slider = document.getElementById("slider");
+
+window.onload = function(){
+    slider.value = "16";
+    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
+}
+
+slider.addEventListener("input",function(){
+    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
+    createGrid();
+})
 
 let mouseDown = false;
 grid.addEventListener("mousedown",function(){mouseDown = true;},{capture:true});
@@ -39,11 +49,11 @@ function revertDesign(e){
 function hoverBackground(button){
     let imgLink;
     switch(button.id){
-        case "black":   imgLink = "../img/black.png";  
+        case "black":   imgLink = "img/black.png";  
                         break;
-        case "rgb": imgLink = "../img/rgb.jpg";
+        case "rgb": imgLink = "img/rgb.jpg";
                     break;
-        case "eraser":  imgLink = "../img/eraser.jpg";
+        case "eraser":  imgLink = "img/eraser.jpg";
                         break;            
     }
     backgroundImg.src = imgLink;
@@ -202,14 +212,6 @@ function start(){
     createGrid();
 }
 
-window.onload = function(){
-    slider.value = "16";
-    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
-}
 
-slider.addEventListener("input",function(){
-    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
-    createGrid();
-})
 
 start();
