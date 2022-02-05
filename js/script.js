@@ -95,3 +95,19 @@ function pickButton(presentButton){
 
 enterButtons();
 
+function createGrid(){
+    const grid = document.getElementById("grid");
+    let i,j;
+    for (i = 1; i <= 10; i++){
+        const row = document.createElement("div");
+        row.classList.add("grid-row");
+        for(j = 1; j <= 10; j++){
+            const cell = document.createElement("div");
+            cell.classList.add("row-cell");
+            row.appendChild(cell);
+        }
+        grid.appendChild(row);
+    }
+}
+
+createGrid();

@@ -59,16 +59,16 @@ body,html{
     box-shadow: 0 0 20px 5px rgba(0,0,0,0.25);
     border-style: solid;
     border-width: 0.5px;
-}
-
-#buttons{
-    width: 300px;
     display: flex;
     flex-direction: column;
 }
 
+#buttons{
+    width: 300px;
+}
+
 #grid{
-    width: 500px;
+    width: 500px;  
 }
 
 .button{
@@ -96,3 +96,19 @@ body,html{
       justify-content: center;
       align-items: start;
   }
+
+  .grid-row,.row-cell{
+    display: flex;
+    border-style: solid;
+    border-width: 0.2px;
+}
+
+.grid-row,.row-cell{
+    flex: 1 0 0;
+}
+
+.row-cell{
+    display: block;
+    background-color: white;
+    transition: background-color 0.2s;
+}
