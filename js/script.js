@@ -5,11 +5,6 @@ const backgroundImg = document.getElementById("background-image");
 const grid = document.getElementById("grid");
 const slider = document.getElementById("slider");
 
-window.onload = function(){
-    slider.value = "16";
-    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
-}
-
 slider.addEventListener("input",function(){
     document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
     createGrid();
@@ -212,6 +207,10 @@ function start(){
     createGrid();
 }
 
+window.onload = function(){
+    slider.value = "16";
+    document.getElementById("slider-value").textContent = `${slider.value} x ${slider.value}`;
+    start();
+}
 
 
-start();
